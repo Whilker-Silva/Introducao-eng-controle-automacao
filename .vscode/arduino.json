@@ -1,5 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
-    "sketch": "Leds\\Leds.ino"
+    "sketch": "led1\\led1.ino",
+    "port": "COM5"
 }
