@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
-    "sketch": "led1\\led1.ino",
-    "port": "COM5"
+    "sketch": "motor_direto\\motor_direto.ino",
+    "port": "COM3"
 }
