@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
-    "sketch": "motor_direto\\motor_direto.ino",
+    "sketch": "04_motor_com_botao\\04_motor_com_botao.ino",
     "port": "COM3"
 }
