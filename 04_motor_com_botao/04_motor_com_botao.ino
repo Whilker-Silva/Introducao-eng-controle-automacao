@@ -9,11 +9,11 @@ void setup()
 
 void loop()
 {
-    digitalWrite(motor, HIGH);
+    digitalWrite(motor, LOW);
 
     if (digitalRead(botao) == 1)
     {
-        digitalWrite(motor, LOW);
+        digitalWrite(motor, HIGH);
         delay(100);
     }
 }
