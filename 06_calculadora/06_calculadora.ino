@@ -1,160 +1,141 @@
-/*
-  teclado da esquerda para direita
-  6,7,8,9,10,11,12,13
+#define botao1 2
+#define botao2 3
+#define led1 4
+#define led2 5
+#define led3 6
+#define led4 7
+#define led5 8
+#define led6 9
+#define led7 10
+#define led8 11
+#define led9 12
+#define led10 13
 
-  display
-
-  pin1--- gnd
-  pin2--- 5v
-  pin3--- gnd com resistor de 2,2k
-  pin4--- A0
-  pin5--- gnd
-  pin6--- A1
-  pin7--- xxx
-  pin8--- xxx
-  pin9--- xxx
-  pin10--- xxx
-  pin11--- 2
-  pin12--- 3
-  pin13--- 4
-  pin14--- 5
-  pin15--- 5v com resistor de 200
-  pin16--- gnd
-
-
-*/
-
-#include <Keypad.h>
-#include <LiquidCrystal.h>
-//______________________________________________________________
-
-byte pinL[] = {14, 15, 16, 17};
-byte pinC[] = {18, 19, 20, 21};
-
-char teclas[4][4] = {
-    {'1', '2', '3', 'A'},
-    {'4', '5', '6', 'B'},
-    {'7', '8', '9', 'C'},
-    {'.', '0', '#', 'D'}};
-
-Keypad teclado = Keypad(makeKeymap(teclas), pinL, pinC, 4, 4);
-//______________________________________________________________
-
-LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
-//______________________________________________________________
-
-bool estado = false;
-
-float i = 0;
-float n = 0;
-float pv = 0;
-
-String numero = "";
-
-//______________________________________________________________
+byte estado = 0;
+// byte estado2 = 0;
+byte contador1 = 0;
+byte contador2 = 0;
+byte numero1 = 0;
 
 void setup()
 {
-
-    lcd.begin(16, 2);
-    lcd.clear();
     Serial.begin(9600);
-    delay(100);
+    pinMode(led1, OUTPUT);
+    pinMode(led2, OUTPUT);
+    pinMode(led3, OUTPUT);
+    pinMode(led4, OUTPUT);
+    pinMode(led5, OUTPUT);
+    pinMode(led6, OUTPUT);
+    pinMode(led7, OUTPUT);
+    pinMode(led8, OUTPUT);
+    pinMode(led9, OUTPUT);
+    pinMode(led10, OUTPUT);
+    pinMode(botao1, INPUT);
+    pinMode(botao2, INPUT);
 }
 
 void loop()
 {
-
-    char push = teclado.getKey();
-
-    if (push)
+    while (estado == 0)
     {
-        if (push != 'A' && push != 'B' && push != 'C' &&
-            push != 'D' && push != '#')
+        if (digitalRead(botao1) == 1)
         {
-            switch (push)
+            while (digitalRead(botao1) == 1)
             {
-
-            case '0':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
-            case '.':
-
-                numero += push;
-
-                lcd.print(push);
-                Serial.print(push);
+                Serial.print("aguardando");
             }
+            contador1++;
+            Serial.println("aguardando");
+            Serial.print(contador1);
+            ligaled5(contador1);
         }
 
-        else if (push == 'A')
+        if (digitalRead(botao2 == 1))
         {
-
-            lcd.clear();
-            Serial.println();
-            i = numero.toFloat();
-            numero = "";
-            delay(100);
+            while (digitalRead(botao2) == 1)
+            {
+            }
+            estado = 1;
+            ligaled5(0);
         }
+    }
 
-        else if (push == 'B')
+    while (estado == 1)
+    {
+        if (digitalRead(botao1) == 1)
         {
-
-            lcd.clear();
-            Serial.println();
-            n = numero.toFloat();
-            numero = "";
-            delay(100);
+            while (digitalRead(botao1) == 1)
+            {
+            }
+            contador2++;
+            ligaled5(contador2);
         }
 
-        else if (push == 'C')
+        if (digitalRead(botao2 == 1))
         {
-
-            lcd.clear();
-            Serial.println();
-            pv = numero.toFloat();
-            numero = "";
-            delay(100);
+            while (digitalRead(botao2) == 1)
+            {
+            }
+            estado = 2;
+            ligaled5(0);
         }
+    }
 
-        else if (push == 'D')
-        {
+    if (estado == 2)
+    {
+        numero1 = contador1 + contador2;
+    }
+}
 
-            i = i / 100;
+void ligaled5(byte x)
+{
 
-            float cf = i / (1 - (1 / (pow(((1 + i)), n))));
-            float pmt = pv * cf;
-            float fv = pmt * n;
+    if (x == 0)
+    {
+        digitalWrite(led1, LOW);
+        digitalWrite(led2, LOW);
+        digitalWrite(led3, LOW);
+        digitalWrite(led4, LOW);
+        digitalWrite(led5, LOW);
+        digitalWrite(led6, LOW);
+        digitalWrite(led7, LOW);
+        digitalWrite(led8, LOW);
+        digitalWrite(led9, LOW);
+        digitalWrite(led10, LOW);
+    }
 
-            lcd.setCursor(0, 0);
-            lcd.print("parcela: ");
-            lcd.print(pmt);
-            Serial.print(pmt);
-            Serial.print(" || ");
+    if (x == 1)
+    {
+        digitalWrite(led1, HIGH);
+    }
 
-            lcd.setCursor(0, 1);
-            lcd.print("total: ");
-            lcd.print(fv);
-            Serial.print(fv);
-        }
+    if (x == 2)
+    {
+        digitalWrite(led1, HIGH);
+        digitalWrite(led2, HIGH);
+    }
 
-        else if (push == '#')
-        {
+    if (x == 3)
+    {
+        digitalWrite(led1, HIGH);
+        digitalWrite(led2, HIGH);
+        digitalWrite(led3, HIGH);
+    }
 
-            lcd.clear();
-            Serial.println();
-            Serial.println();
-            i = 0;
-            n = 0;
-            pv = 0;
-            numero = "";
-        }
+    if (x == 4)
+    {
+        digitalWrite(led1, HIGH);
+        digitalWrite(led2, HIGH);
+        digitalWrite(led3, HIGH);
+        digitalWrite(led4, HIGH);
+    }
+
+    if (x == 5)
+    {
+        digitalWrite(led1, HIGH);
+        digitalWrite(led2, HIGH);
+        digitalWrite(led3, HIGH);
+        digitalWrite(led4, HIGH);
+        digitalWrite(led5, HIGH);
     }
 }
