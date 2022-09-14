@@ -1,7 +1,6 @@
 {
-    "board": "arduino:avr:mega",
+    "board": "arduino:avr:uno",
     "programmer": "arduino:avrisp",
     "sketch": "06_calculadora\\06_calculadora.ino",
-    "port": "COM4",
-    "configuration": "cpu=atmega2560"
+    "port": "COM3"
 }
